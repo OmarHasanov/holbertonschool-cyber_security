@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+# This script prints indefinitely, trapping SIGTERM to say "I am invincible!!!"
+
+# Define the function to run when SIGTERM is intercepted
+invincible() {
+    echo "I am invincible!!!"
+}
+
+# Trap SIGTERM (signal 15) and point it to our function
+trap invincible SIGTERM
+
+while true
+do
+    echo "To infinity and beyond"
+    sleep 2
+done

@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+# This script manages its PID in a file, responds to signals, and cleans up.
+
+PID_FILE="/tmp/myscript.pid"
+
+# Save the current process PID to the designated file
+echo "$$" > "$PID_FILE"
+
+# Function to execute on SIGINT (Ctrl+C)
+sig_int() {
+    echo "Y U no love me?!"
+}
+
+# Function to execute on SIGTERM
+sig_term() {
+    echo "I hate the kill command"
+    rm -f "$PID_FILE"
+    exit 0
+}
+
+# Function to execute on SIGQUIT
+sig_quit() {
+    rm -f "$PID_FILE"
+    exit 0
+}
+
+# Set up traps for the respective signals
+trap sig_int SIGINT
+trap sig_term SIGTERM
+trap sig_quit SIGQUIT
+
+# Indefinite loop
+while true
+do
+    echo "To infinity and beyond"
+    sleep 2
+done

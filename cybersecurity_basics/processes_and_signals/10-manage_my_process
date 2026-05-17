@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# This script manages the start, stop, and restart lifecycle of manage_my_process.
+
+PID_FILE="/tmp/my_process.pid"
+SCRIPT_PATH="./manage_my_process"
+
+case "$1" in
+    start)
+        # Run the daemon script in the background and redirect outputs
+        "$SCRIPT_PATH" > /dev/null 2>&1 &
+        # Capture the PID of the background process ($!) and save it
+        echo "$!" > "$PID_FILE"
+        echo "manage_my_process started"
+        ;;
+    stop)
+        if [ -f "$PID_FILE" ]; then
+            kill "$(cat "$PID_FILE")"
+            rm -f "$PID_FILE"
+        fi
+        echo "manage_my_process stopped"
+        ;;
+    restart)
+        if [ -f "$PID_FILE" ]; then
+            kill "$(cat "$PID_FILE")"
+            rm -f "$PID_FILE"
+        fi
+        "$SCRIPT_PATH" > /dev/null 2>&1 &
+        echo "$!" > "$PID_FILE"
+        echo "manage_my_process restarted"
+        ;;
+    *)
+        echo "Usage: manage_my_process {start|stop|restart}"
+        exit 1
+        ;;
+esac
