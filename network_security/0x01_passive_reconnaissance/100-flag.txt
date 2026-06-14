@@ -1,2 +1,2 @@
 #!/bin/bash
-9a78152d516e1a6fc1315bc3c85101bf
+[ "$(dig +short TXT passive.hbtn @$(cat $3) | tr -d '"')" = "$1" ] && echo ok || echo invalid
