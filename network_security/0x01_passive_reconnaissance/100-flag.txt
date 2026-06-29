@@ -1,3 +1,1 @@
-#!/bin/bash
-result=$(dig +short TXT passive.hbtn @$(cat $3) | tr -d '"')
-[ "$result" = $1 ] && echo ok || echo invalid
+7e681e69bf71660b15f7e807030e9868
